@@ -15,26 +15,26 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 
 
 class EnsembleModel(nn.Module):
-    def __init__(self):
+    def __init__(self, CFG):
         super(EnsembleModel, self).__init__()
         
-        self.linear1 = nn.Linear(768,512)
+        self.linear1 = nn.Linear(512,384)
+        self.linear2 = nn.Linear(768,384)
+
         self.relu = nn.ReLU()
-        self.transformer_encoder_layer = nn.TransformerEncoderLayer(d_model=512,nhead=8)
-        self.tranformer_encoder = nn.TransformerEncoder(self.transformer_encoder_layer,num_layers=3)
-        self.linear2 = nn.Linear(512,384)
+        self.leaky_relu = nn.LeakyReLU()
+        self.transformer_encoder_layer = nn.TransformerEncoderLayer(d_model=384,nhead=CFG.num_heads)
+        self.tranformer_encoder = nn.TransformerEncoder(self.transformer_encoder_layer,num_layers=CFG.num_layers)
+        self.linear_out = nn.Linear(384,384)
 
 
     def forward(self, x):
-        emb1 = x[0]
-        emb2 = self.relu(self.linear1(x[1]))
+        emb1 = self.leaky_relu(self.linear1(x[0]))
+        emb2 = self.leaky_relu(self.linear2(x[1]))
+        emb3 = x[2]
         
-        emb_inp = torch.stack([emb1,emb2],dim=1)
+        emb_inp = torch.stack([emb1,emb2,emb3],dim=1)
         out = self.tranformer_encoder(emb_inp)
-        out = self.linear2(out)
+        out = self.linear_out(out)
 
         return out[:,0,:]
-
-    
-    
-    

@@ -1,5 +1,7 @@
 import numpy as np
 import os
+import sys
+import yaml
 
 import torch
 import torch.nn as nn
@@ -20,7 +22,7 @@ from image_to_text_dataset import ImageToTextDataModule
 class ImageToText(pl.LightningModule):
     def __init__(self, CFG):
         super(ImageToText, self).__init__()
-        self.model = EnsembleModel()
+        self.model = EnsembleModel(CFG)
         self.loss_fn = nn.MSELoss()
         self.cs = nn.CosineSimilarity()
         self.CFG = CFG
@@ -62,18 +64,22 @@ class ImageToText(pl.LightningModule):
         return optimizer
 
 if __name__ == "__main__":
-    class CFG:
-        seed = 42
-        batch_size = 32
-        learning_rate = 1e-3
-        num_epochs = 50
-  
+
+    CONFIG_FILE = sys.argv[1]
+    configs = yaml.safe_load(open(CONFIG_FILE, 'r'))
+
+    class cfg(object):
+      def __init__(self, d):    
+          for key in d:
+              setattr(self, key, d[key])
+
+    CFG = cfg(configs)
+
     seed_everything(CFG.seed, workers=True)
 
-    paths = ["/content/drive/MyDrive/CSE 252D Project/img_embeddings_clip_vit32.npy",
-            "/content/drive/MyDrive/CSE 252D Project/img_embeddings_convnext.npy"]
+    paths = CFG.embedding_paths
     
-    gt_path = "/content/drive/MyDrive/CSE 252D Project/prompt_embeddings.npy"
+    gt_path = CFG.gt_path
     
     dm = ImageToTextDataModule(CFG,paths,gt_path)
     dm.prepare_data()
@@ -81,8 +87,8 @@ if __name__ == "__main__":
 
     model = ImageToText(CFG)
 
-    logger = pl_loggers.TensorBoardLogger("tb_logs", name="my_model")
-    checkpoint_callback = ModelCheckpoint(dirpath="./model_ckpts",
+    logger = pl_loggers.TensorBoardLogger("tb_logs", name=CFG.exp_name)
+    checkpoint_callback = ModelCheckpoint(dirpath="./model_ckpts/"+CFG.exp_name,
                                         monitor='val_loss_epoch',
                                         save_top_k=1,
                                         save_last=True,
