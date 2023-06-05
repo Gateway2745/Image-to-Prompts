@@ -8,6 +8,7 @@
 !pip install gradio
 !pip install open_clip_torch
 !pip install clip-interrogator
+
 ```
 
 ## Data:
