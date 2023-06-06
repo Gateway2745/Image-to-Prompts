@@ -23,9 +23,10 @@ class ImageToText(pl.LightningModule):
     def __init__(self, CFG):
         super(ImageToText, self).__init__()
         self.model = EnsembleModel(CFG)
-        self.loss_fn = nn.MSELoss()
+        self.loss_fn = nn.CosineEmbeddingLoss()
         self.cs = nn.CosineSimilarity()
         self.CFG = CFG
+        self.y = torch.tensor([1]).cuda()
 
     def forward(self, x):
         out = self.model(x)
@@ -35,7 +36,7 @@ class ImageToText(pl.LightningModule):
         inps = batch[:-1]
         y = batch[-1]
         out = self.model(inps)
-        loss = self.loss_fn(out, y)
+        loss = self.loss_fn(out, y, target=self.y)
         self.log("train_loss",loss)
         return loss
 
@@ -43,7 +44,7 @@ class ImageToText(pl.LightningModule):
         inps = batch[:-1]
         y = batch[-1]
         out = self.model(inps)
-        loss = self.loss_fn(out, y).item()
+        loss = self.loss_fn(out, y, target=self.y).item()
         sim = self.cs(out,y).mean(0).item()
         
         self.log("val_loss_epoch", loss, logger=True, on_step=False, on_epoch=True, prog_bar=True)
@@ -53,7 +54,7 @@ class ImageToText(pl.LightningModule):
         inps = batch[:-1]
         y = batch[-1]
         out = self.model(inps)
-        loss = self.loss_fn(out, y).item()
+        loss = self.loss_fn(out, y, target=self.y).item()
         sim = self.cs(out,y).mean(0).item()
         
         self.log("test_loss_epoch", loss)
