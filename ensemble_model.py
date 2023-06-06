@@ -18,20 +18,20 @@ class EnsembleModel(nn.Module):
     def __init__(self, CFG):
         super(EnsembleModel, self).__init__()
         
-        self.linear1 = nn.Linear(512,384)
-        self.linear2 = nn.Linear(768,384)
+        self.linear1 = nn.Linear(512,512)
+        self.linear2 = nn.Linear(768,512)
+        self.linear3 = nn.Linear(384,512)
 
-        self.relu = nn.ReLU()
-        self.leaky_relu = nn.LeakyReLU()
-        self.transformer_encoder_layer = nn.TransformerEncoderLayer(d_model=384,nhead=CFG.num_heads)
+        self.elu = nn.ELU()
+        self.transformer_encoder_layer = nn.TransformerEncoderLayer(d_model=512,nhead=CFG.num_heads)
         self.tranformer_encoder = nn.TransformerEncoder(self.transformer_encoder_layer,num_layers=CFG.num_layers)
-        self.linear_out = nn.Linear(384,384)
+        self.linear_out = nn.Linear(512,384)
 
 
     def forward(self, x):
-        emb1 = self.leaky_relu(self.linear1(x[0]))
-        emb2 = self.leaky_relu(self.linear2(x[1]))
-        emb3 = x[2]
+        emb1 = x[0]
+        emb2 = self.elu(self.linear2(x[1]))
+        emb3 = self.elu(self.linear3(x[2]))
         
         emb_inp = torch.stack([emb1,emb2,emb3],dim=1)
         out = self.tranformer_encoder(emb_inp)
