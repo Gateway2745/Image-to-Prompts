@@ -1,0 +1,19 @@
+exp_name: "10k_train_final"
+
+# data configs
+num_examples: 10000
+embedding_paths: ["/content/drive/MyDrive/CSE 252D Project/10K_embeddings/10k_clip_embeddings.npy",
+                  "/content/drive/MyDrive/CSE 252D Project/10K_embeddings/10k_convnext_embeddings.npy",
+                  "/content/drive/MyDrive/CSE 252D Project/10K_embeddings/10k_clip_intgtr_embeddings.npy"]    
+gt_path: "/content/drive/MyDrive/CSE 252D Project/10K_embeddings/10k_gt_prompt_embeddings.npy"
+train_fraction: 0.9
+
+# model configs
+num_layers: 3
+num_heads: 8
+
+# learning configs
+seed: 0
+batch_size: 64
+learning_rate: 0.0005
+num_epochs: 500
