@@ -6,7 +6,7 @@ embedding_paths: ["/content/drive/MyDrive/CSE 252D Project/10K_embeddings/10k_cl
                   "/content/drive/MyDrive/CSE 252D Project/10K_embeddings/10k_convnext_embeddings.npy",
                   "/content/drive/MyDrive/CSE 252D Project/10K_embeddings/10k_clip_intgtr_embeddings.npy"]    
 gt_path: "/content/drive/MyDrive/CSE 252D Project/10K_embeddings/10k_gt_prompt_embeddings.npy"
-train_fraction: 0.9
+train_fraction: 0.8
 
 # model configs
 num_layers: 3
