@@ -14,18 +14,18 @@ class ImageToTextDataset(torch.utils.data.Dataset):
         return self.embeddings[0].shape[0]
 
     def __getitem__(self, index):
-        embeddings_list_tensor = [torch.tensor(e[index]) for e in self.embeddings]
+        embeddings_list_tensor = [torch.tensor(e[index],dtype=torch.float32) for e in self.embeddings]
         embeddings_list_tensor.append(torch.tensor(self.gt_embeddings[index]))
         return embeddings_list_tensor
     
     
 class ImageToTextDataModule(pl.LightningDataModule):
-    def __init__(self,CFG,paths,gt_path,num_examples=10000):
+    def __init__(self,CFG,paths,gt_path):
         super(ImageToTextDataModule, self).__init__()
         self.CFG=CFG
         self.paths = paths
         self.gt_path = gt_path
-        self.num_examples = num_examples
+        self.num_examples = CFG.num_examples
 
     def prepare_data(self):
         self.permuted_indices = torch.randperm(self.num_examples)
