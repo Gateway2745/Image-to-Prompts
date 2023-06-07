@@ -57,8 +57,8 @@ class ImageToText(pl.LightningModule):
         loss = self.loss_fn(out, y, target=self.y).item()
         sim = self.cs(out,y).mean(0).item()
         
-        self.log("test_loss_epoch", loss)
-        self.log("test_cosine_sim_epoch", sim)
+        self.log("test_loss", loss)
+        self.log("test_cosine_sim", sim)
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.model.parameters(), lr=self.CFG.learning_rate)
@@ -90,13 +90,13 @@ if __name__ == "__main__":
 
     logger = pl_loggers.TensorBoardLogger("tb_logs", name=CFG.exp_name)
     checkpoint_callback = ModelCheckpoint(dirpath="./model_ckpts/"+CFG.exp_name,
-                                        monitor='val_loss_epoch',
+                                        monitor='val_cosine_sim_epoch',
                                         save_top_k=1,
                                         save_last=True,
                                         save_weights_only=True,
-                                        filename='{epoch:02d}-{val_loss_epoch:.4f}',
+                                        filename='{epoch:02d}-{val_loss_epoch:.4f}-{val_cosine_sim_epoch:.4f}',
                                         verbose=False,
-                                        mode='min')
+                                        mode='max')
 
     trainer = Trainer(
         max_epochs=CFG.num_epochs,
