@@ -26,11 +26,12 @@ class ImageToTextDataModule(pl.LightningDataModule):
         self.paths = paths
         self.gt_path = gt_path
         self.num_examples = CFG.num_examples
+        self.train_fraction = CFG.train_fraction
 
     def prepare_data(self):
         self.permuted_indices = torch.randperm(self.num_examples)
-        self.train_indices = self.permuted_indices[:int(self.num_examples*0.8)]
-        self.test_indices = self.permuted_indices[int(self.num_examples*0.8):]
+        self.train_indices = self.permuted_indices[:int(self.num_examples*self.train_fraction)]
+        self.test_indices = self.permuted_indices[int(self.num_examples*self.train_fraction):]
 
     def setup(self,stage=None):
         self.train_dataset = ImageToTextDataset(self.paths, self.gt_path, self.train_indices)
