@@ -9,7 +9,7 @@ Text-to-image generative models represent a powerful and innovative approach for
 
 ## Demo:
 
-The Jupyter notebook demonstrating our proposed model pipeline including embedding generation and inference of our Transformer ensemble model can be found at ![demo_notebook.ipynb](https://github.com/Gateway2745/Image-to-Prompts/demo_notebook.ipynb)
+The Jupyter notebook demonstrating our proposed model pipeline including embedding generation and inference of our Transformer ensemble model can be found at ![demo_notebook.ipynb](https://github.com/Gateway2745/Image-to-Prompts/blob/main/demo_notebook.ipynb)
 
 ## Requirements:
 ```
