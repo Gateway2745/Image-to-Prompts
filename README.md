@@ -59,4 +59,4 @@ The average cosine similarity of our ensemble models on the validation sets of o
 ||10k dataset|43k dataset|93k dataset|
 |:---:|:---:|:---:|:---:|
 |**Average cosine similarity**|0.701|0.687|0.690|
-|**Model checkpoint**|[10K_ensemble_model.ckpt](https://drive.google.com/file/d/1A_Ue5li4f9cY5wiB3GgFe1F_VD-rk-K7/view?usp=share_link)|[50K_ensemble_model.ckpt](https://drive.google.com/file/d/1aiV5W01t_L4x4nTVROoEX8muabwMwOfq/view?usp=share_link)| [100K_ensemble_model.ckpt](https://drive.google.com/file/d/1jwkhx6Vwyuj4S_EnggBtKbVIY7LSLS_T/view?usp=share_link)|
+|**Model checkpoint**|[10K_ensemble_model.ckpt](https://drive.google.com/drive/folders/1G3VrRSK2m7A83wDO0-1IAo7MncBS4LCu?usp=share_link)|[50K_ensemble_model.ckpt](https://drive.google.com/drive/folders/1oYYmsKDwcQTBA2vPSWSK0PxF2BLzW4QR?usp=share_link)| [100K_ensemble_model.ckpt](https://drive.google.com/drive/folders/1ejRSvfzwosZ4Q3uX8_45CGHAqDK6nJ4Y?usp=share_link)|
