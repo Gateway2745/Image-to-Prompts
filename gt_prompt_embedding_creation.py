@@ -5,7 +5,6 @@ from sentence_transformers import SentenceTransformer, models
 def create_gt_embeddings(path_to_csv, batch_size=1):
   st_model = SentenceTransformer('all-MiniLM-L6-v2', device='cuda')
   gt_csv = pd.read_csv(path_to_csv).sort_values('image')
-  print(gt_csv.head())
   gt_prompts = gt_csv.prompt.values
   gt_prompt_embeddings = st_model.encode(gt_prompts, batch_size=batch_size, convert_to_numpy=True, device='cuda')
   return gt_prompt_embeddings
