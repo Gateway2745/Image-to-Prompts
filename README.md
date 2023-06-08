@@ -42,10 +42,10 @@ We have precomputed the embeddings required to train and evaluate our model. You
 
 |10k dataset|43k dataset|93k dataset|
 |:---:|:---:|:---:|
-|[10K_embeddings](https://drive.google.com/drive/folders/10sjzdXXAhJ3vjF1fh5j9c4lleInqmTkK?usp=share_link)|[50K_embeddings](https://drive.google.com/drive/folders/11B6GNBh2Bz7Duo3R2Pr0KVLcCkJFl16o?usp=share_link)| [100K_embeddings](https://drive.google.com/drive/folders/1sgTM3q27sFcXRzfY259NMaJaIvo-kIGu?usp=share_link)|
+|[10K_embeddings](https://drive.google.com/drive/folders/10sjzdXXAhJ3vjF1fh5j9c4lleInqmTkK?usp=share_link)|[43K_embeddings](https://drive.google.com/drive/folders/11B6GNBh2Bz7Duo3R2Pr0KVLcCkJFl16o?usp=share_link)| [93K_embeddings](https://drive.google.com/drive/folders/1sgTM3q27sFcXRzfY259NMaJaIvo-kIGu?usp=share_link)|
 
 ## Training
-Please see the config files [config-10k.yml](https://github.com/Gateway2745/Image-to-Prompts/blob/main/config-10k.yml), [config-50k.yml](https://github.com/Gateway2745/Image-to-Prompts/blob/main/config-50k.yml), [config-100k.yml](https://github.com/Gateway2745/Image-to-Prompts/blob/main/config-100k.yml) for settings hyperparameters and paths to data files.
+Please see the config files [config-10k.yml](https://github.com/Gateway2745/Image-to-Prompts/blob/main/config-10k.yml), [config-43k.yml](https://github.com/Gateway2745/Image-to-Prompts/blob/main/config-43k.yml), [config-93k.yml](https://github.com/Gateway2745/Image-to-Prompts/blob/main/config-93k.yml) for settings hyperparameters and paths to data files.
 
 The command for training is,
 ```
@@ -59,4 +59,9 @@ The average cosine similarity of our ensemble models on the validation sets of o
 ||10k dataset|43k dataset|93k dataset|
 |:---:|:---:|:---:|:---:|
 |**Average cosine similarity**|0.701|0.687|0.690|
-|**Model checkpoint**|[10K_ensemble_model.ckpt](https://drive.google.com/drive/folders/1G3VrRSK2m7A83wDO0-1IAo7MncBS4LCu?usp=share_link)|[50K_ensemble_model.ckpt](https://drive.google.com/drive/folders/1oYYmsKDwcQTBA2vPSWSK0PxF2BLzW4QR?usp=share_link)| [100K_ensemble_model.ckpt](https://drive.google.com/drive/folders/1ejRSvfzwosZ4Q3uX8_45CGHAqDK6nJ4Y?usp=share_link)|
+|**Model checkpoint**|[10K_ensemble_model.ckpt](https://drive.google.com/drive/folders/1G3VrRSK2m7A83wDO0-1IAo7MncBS4LCu?usp=share_link)|[43K_ensemble_model.ckpt](https://drive.google.com/drive/folders/1oYYmsKDwcQTBA2vPSWSK0PxF2BLzW4QR?usp=share_link)| [93K_ensemble_model.ckpt](https://drive.google.com/drive/folders/1ejRSvfzwosZ4Q3uX8_45CGHAqDK6nJ4Y?usp=share_link)|
+
+The command to perform evaluation of our Transformer ensemble model using the above model weights is,
+```
+python evaluate.py config-10k.yml "./10k_ensemble_model.ckpt"
+```
