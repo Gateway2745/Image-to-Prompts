@@ -1,4 +1,4 @@
-exp_name: "100k_train_trial"
+exp_name: "100k_train_final"
 
 # data configs
 num_examples: 93826
