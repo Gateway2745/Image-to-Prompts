@@ -5,7 +5,7 @@ num_examples: 43826
 embedding_paths: ["./50K_embeddings/50k_clip_embeddings.npy",
                   "./50K_embeddings/50k_convnext_embeddings.npy",
                   "./50K_embeddings/50k_clip_intgtr_embeddings.npy"]    
-gt_path: "/content/drive/MyDrive/CSE 252D Project/50K_embeddings/50k_gt_prompt_embeddings.npy"
+gt_path: "./50K_embeddings/50k_gt_prompt_embeddings.npy"
 train_fraction: 0.8
 
 # model configs
