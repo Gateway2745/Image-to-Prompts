@@ -2,10 +2,10 @@ exp_name: "43k_train_final"
 
 # data configs
 num_examples: 43826
-embedding_paths: ["./43K_embeddings/43k_clip_embeddings.npy",
-                  "./43K_embeddings/43k_convnext_embeddings.npy",
-                  "./43K_embeddings/43k_clip_intgtr_embeddings.npy"]    
-gt_path: "./43K_embeddings/43k_gt_prompt_embeddings.npy"
+embedding_paths: ["../43K_embeddings/43k_clip_embeddings.npy",
+                  "../43K_embeddings/43k_convnext_embeddings.npy",
+                  "../43K_embeddings/43k_clip_intgtr_embeddings.npy"]    
+gt_path: "../43K_embeddings/43k_gt_prompt_embeddings.npy"
 train_fraction: 0.8
 
 # model configs
