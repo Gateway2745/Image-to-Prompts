@@ -5,9 +5,8 @@
 !pip install sentence_transformers
 !pip install ftfy regex tqdm
 !pip install git+https://github.com/openai/CLIP.git
-!pip install gradio
-!pip install open_clip_torch
-!pip install clip-interrogator
+!pip install pytorch_lightning torchmetrics
+!pip install clip-interrogator==0.6.0
 ```
 
 ## Data:
