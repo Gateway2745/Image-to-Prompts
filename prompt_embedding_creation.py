@@ -1,24 +1,16 @@
-import glob
-import json
+import pandas as pd
 import numpy as np
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer, models
 
-def create_prompt_embeddings():
-    st_model = SentenceTransformer('all-MiniLM-L6-v2', device='cuda')
+def create_gt_embeddings(path_to_csv, batch_size=1):
+  st_model = SentenceTransformer('all-MiniLM-L6-v2', device='cuda')
+  gt_csv = pd.read_csv(path_to_csv).sort_values('image')
+  print(gt_csv.head())
+  gt_prompts = gt_csv.prompt.values
+  gt_prompt_embeddings = st_model.encode(gt_prompts, batch_size=batch_size, convert_to_numpy=True, device='cuda')
+  return gt_prompt_embeddings
 
-    prompt_tuples = []
 
-    for path in sorted(glob.glob("./images/*.json")):
-        with open(path, "r") as f:
-            prompts = json.load(f)
-            prompt_tuples += [(k,v['p']) for k,v in prompts.items()]
-
-    prompt_tuples.sort()
-    prompt_strings = [x[1] for x in prompt_tuples]
-
-    prompt_embeddings = st_model.encode(prompt_strings, batch_size=32, convert_to_numpy=True, device='cuda')
-
-    np.save('prompt_embeddings.npy', prompt_embeddings)
-    
-if __name__ == "__main__":
-    create_prompt_embeddings()
+if __name__=="__main__":
+  gt_prompt_embeddings = create_gt_embeddings("/content/drive/MyDrive/CSE 252D Project/50k_gt_prompts.csv", batch_size=32)
+  np.save('50k_gt_prompt_embeddings.npy', gt_prompt_embeddings)
